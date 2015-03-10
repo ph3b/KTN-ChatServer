@@ -8,9 +8,9 @@ A basic chat server written in Node.JS using basic TCP websockets. Sends and rec
   { "request" : command, "content" : content }
   
 Commands:
- - login <username>
+ - login < username >
  - logout
- - msg <Your message>
+ - msg < Your message >
  - help - Shows available commands
  - names - shows online usernames
 
