@@ -2,7 +2,6 @@
  * Created by mattiden on 24.02.15.
  */
 module.exports = function(message, socket, connections){
-
     var username = message.content;
     var usernameExists = false;
     for(var i = 0; i < connections.length; i++){
@@ -13,7 +12,7 @@ module.exports = function(message, socket, connections){
     if(usernameExists){
         var response = {
             'timestamp': Date.now(),
-            'sender': socket.username,
+            'sender': "server",
             'response': "error",
             'content': "Username already in use"
         };
@@ -25,7 +24,7 @@ module.exports = function(message, socket, connections){
 
         var response = {
             'timestamp': Date.now(),
-            'sender': socket.username,
+            'sender': "server",
             'response': "info",
             'content': "Logged in successfully"
         };

@@ -8,5 +8,4 @@ var router = require('./routes/routes');
 
 // Set up routes
 router(socketConnection);
-
 console.log("Socket server running on port: " + port);

@@ -17,13 +17,27 @@ module.exports = function(socketConnection){
 
     var notLoggedInError = {
         'timestamp': Date.now(),
-        'sender': 'Not logged in',
+        'sender': 'server',
         'response': "error",
         'content': "Not logged in. Please log in."
     };
 
+    var welcomeMessage = {
+        'timestamp': Date.now(),
+        'sender': 'server',
+        'response': "info",
+        'content': 'Welcome to chat server'
+    };
+    var invalidCommandMessage = {
+        'timestamp': Date.now(),
+        'sender': 'server',
+        'response': "error",
+        'content': 'Please send payload with the following field: request, content. Type help for more.'
+    };
+
+
     socketConnection.on('connection', function(socket){
-        socket.send('Welcome to chat server');
+        socket.send(JSON.stringify(welcomeMessage));
 
         socket.on('message', function incoming(req){
             var message = JSON.parse(req);
@@ -33,10 +47,10 @@ module.exports = function(socketConnection){
                         loginHandler(message,socket, connections);
                         break;
                     case 'msg':
-                        msgHandler(userIsLoggedIn, socket, notLoggedInError);
+                        msgHandler(userIsLoggedIn, socket, notLoggedInError, req, socketConnection);
                         break;
                     case 'logout':
-                        logoutHandler(socket, connections);
+                        logoutHandler(socket, connections, userIsLoggedIn, notLoggedInError);
                         break;
                     case 'names':
                         namesHandler(userIsLoggedIn,connections, socket, notLoggedInError);
@@ -45,6 +59,9 @@ module.exports = function(socketConnection){
                         helpHandler(socket);
                         break;
                 }
+            }
+            else {
+                socket.send(JSON.stringify(invalidCommandMessage));
             }
         });
         socket.on('close', function(){
