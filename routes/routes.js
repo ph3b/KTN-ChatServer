@@ -58,6 +58,9 @@ module.exports = function(socketConnection){
                     case 'help':
                         helpHandler(socket);
                         break;
+                    default :
+                        socket.send(JSON.stringify(invalidCommandMessage));
+                        break;
                 }
             }
             else {
