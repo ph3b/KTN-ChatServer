@@ -27,7 +27,7 @@ describe('Chatting functionality', function(){
 
 
     });
-    it('Client 2 should get chat from client 1 when logged in',function(done){
+    it('Client 3 should get chat from client 1 when logged in',function(done){
         var client1 = new WebSocket('ws://localhost:1337');
         var client2 = new WebSocket('ws://localhost:1337');
 

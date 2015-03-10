@@ -39,6 +39,25 @@ describe('General socket endpoints', function(){
         });
 
     });
+    it('should receive error when sending invalid payload format', function(done){
+        var clientSocket = new WebSocket(apiUrl);
+
+        var invalidMsg = {"request": "not-a-valid-command"};
+
+        clientSocket.on('open', function(){
+            clientSocket.send(JSON.stringify(invalidMsg));
+            clientSocket.onmessage = function(message){
+                var response = JSON.parse(message.data);
+                if(response.content !== 'Welcome to chat server' && response.content !== 'Logged in successfully') {
+                    expect(response.content).to.eql('Please send payload with the following field: request, content. Type help for more.');
+                    expect(response.response).to.eql('error');
+                    clientSocket.close();
+                    done();
+                }
+            }
+        });
+
+    });
 
 
     it('should log into server', function(done){
