@@ -21,4 +21,4 @@ Commands:
     $ npm test
 
 
-Client can be found here: https://github.com/ph3b/KTN-ChatServer/
+Client can be found here: https://github.com/ph3b/KTN-Client
