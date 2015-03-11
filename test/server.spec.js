@@ -5,7 +5,7 @@ var expect = require('expect.js');
 var WebSocket = require('ws');
 require('./../server.js');
 
-var apiUrl = 'ws://localhost:1337';
+var apiUrl = 'ws://localhost:2337';
 
 describe('General socket endpoints', function(){
     it('should receive welcome text when connected to server', function(done){

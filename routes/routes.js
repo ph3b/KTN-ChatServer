@@ -7,7 +7,6 @@ var namesHandler = require('./handlers/namesHandler');
 var helpHandler = require('./handlers/helpHandler');
 var logoutHandler = require('./handlers/logoutHandler');
 
-
 var userIsLoggedIn = function(user){
     return typeof user.username !== 'undefined';
 };
@@ -35,7 +34,6 @@ module.exports = function(socketConnection){
             'response': "error",
             'content': 'Please send payload with the following field: request, content. Type help for more.'})
     };
-
 
     socketConnection.on('connection', function(socket){
         socket.send(JSON.stringify(welcomeMessage()));

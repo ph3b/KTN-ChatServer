@@ -7,7 +7,7 @@ module.exports = function(userIsLoggedIn, socket, notLoggedInError, req, socketC
         var message = {
             'timestamp': Date.now(),
             'sender': socket.username,
-            'response': "info",
+            'response': "msg",
             'content': request.content
         };
         socketConnection.clients.forEach(function(client){

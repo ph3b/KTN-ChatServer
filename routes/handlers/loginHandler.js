@@ -4,6 +4,7 @@
 module.exports = function(message, socket, connections){
     var username = message.content;
     var usernameExists = false;
+
     for(var i = 0; i < connections.length; i++){
         if(connections[i].username === username){
             usernameExists = true;

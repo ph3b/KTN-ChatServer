@@ -5,9 +5,11 @@ var expect = require('expect.js');
 var WebSocket = require('ws');
 require('./../server.js');
 
+var apiUrl = 'ws://localhost:2337';
+
 describe('Chatting functionality', function(){
     it('should not be able to send message when not logged in',function(done){
-        var clientSocket = new WebSocket('ws://localhost:1337');
+        var clientSocket = new WebSocket(apiUrl);
         var message = {'request': 'msg', 'content': 'I am message'};
 
         clientSocket.on('open', function(){
@@ -28,8 +30,8 @@ describe('Chatting functionality', function(){
 
     });
     it('Client 3 should get chat from client 1 when logged in',function(done){
-        var client1 = new WebSocket('ws://localhost:1337');
-        var client2 = new WebSocket('ws://localhost:1337');
+        var client1 = new WebSocket(apiUrl);
+        var client2 = new WebSocket(apiUrl);
 
             var client1cred = {"request": "login", "content": "Northug"};
             var client2cred = {"request": "login", "content": "Sundby"};
@@ -47,7 +49,7 @@ describe('Chatting functionality', function(){
                         if(response.content !== 'Welcome to chat server' && response.content !== 'Logged in successfully') {
                             expect(response.sender).to.be.eql("Northug");
                             expect(response.content).to.be.eql("Du suger!");
-                            expect(response.response).to.be.eql("info");
+                            expect(response.response).to.be.eql("msg");
                             client1.close();
                             client2.close();
                             done();
@@ -58,9 +60,9 @@ describe('Chatting functionality', function(){
         });
     });
     it('Client 2 should get chat from client 1 when logged in',function(done){
-        var client1 = new WebSocket('ws://localhost:1337');
-        var client2 = new WebSocket('ws://localhost:1337');
-        var client3 = new WebSocket('ws://localhost:1337');
+        var client1 = new WebSocket(apiUrl);
+        var client2 = new WebSocket(apiUrl);
+        var client3 = new WebSocket(apiUrl);
 
         var client1cred = {"request": "login", "content": "Northug"};
         var client2cred = {"request": "login", "content": "Sundby"};
@@ -79,7 +81,7 @@ describe('Chatting functionality', function(){
                         if(response.content !== 'Welcome to chat server' && response.content !== 'Logged in successfully') {
                             expect(response.sender).to.be.eql("Northug");
                             expect(response.content).to.be.eql("Du suger!");
-                            expect(response.response).to.be.eql("info");
+                            expect(response.response).to.be.eql("msg");
                             client1.close();
                             client2.close();
                             done();

@@ -3,7 +3,7 @@
  */
 module.exports = function(socket, connections, userIsLoggedIn, notLoggedInError){
     if(userIsLoggedIn(socket)){
-        connections.splice(connections.indexOf(socket), 1);
+        delete socket.username;
         var response = {
             'timestamp': Date.now(),
             'sender': "server",
@@ -14,8 +14,4 @@ module.exports = function(socket, connections, userIsLoggedIn, notLoggedInError)
     } else {
         socket.send(JSON.stringify(notLoggedInError()));
     }
-
-
-
-
 };
