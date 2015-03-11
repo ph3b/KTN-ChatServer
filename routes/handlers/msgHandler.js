@@ -15,6 +15,6 @@ module.exports = function(userIsLoggedIn, socket, notLoggedInError, req, socketC
         })
     }
     else {
-        socket.send(JSON.stringify(notLoggedInError));
+        socket.send(JSON.stringify(notLoggedInError()));
     }
 };

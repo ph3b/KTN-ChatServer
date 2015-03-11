@@ -15,29 +15,30 @@ var userIsLoggedIn = function(user){
 module.exports = function(socketConnection){
     var connections = [];
 
-    var notLoggedInError = {
-        'timestamp': Date.now(),
+    var notLoggedInError = function(){
+        return({'timestamp': Date.now(),
         'sender': 'server',
         'response': "error",
-        'content': "Not logged in. Please log in."
+        'content': "Not logged in. Please log in."})
     };
 
-    var welcomeMessage = {
-        'timestamp': Date.now(),
-        'sender': 'server',
-        'response': "info",
-        'content': 'Welcome to chat server'
+    var welcomeMessage = function(){
+        return({'timestamp': Date.now(),
+            'sender': 'server',
+            'response': "info",
+            'content': 'Welcome to chat server'})
     };
-    var invalidCommandMessage = {
-        'timestamp': Date.now(),
-        'sender': 'server',
-        'response': "error",
-        'content': 'Please send payload with the following field: request, content. Type help for more.'
+
+    var invalidCommandMessage = function(){
+        return({  'timestamp': Date.now(),
+            'sender': 'server',
+            'response': "error",
+            'content': 'Please send payload with the following field: request, content. Type help for more.'})
     };
 
 
     socketConnection.on('connection', function(socket){
-        socket.send(JSON.stringify(welcomeMessage));
+        socket.send(JSON.stringify(welcomeMessage()));
 
         socket.on('message', function incoming(req){
             var message = JSON.parse(req);
@@ -59,12 +60,12 @@ module.exports = function(socketConnection){
                         helpHandler(socket);
                         break;
                     default :
-                        socket.send(JSON.stringify(invalidCommandMessage));
+                        socket.send(JSON.stringify(invalidCommandMessage()));
                         break;
                 }
             }
             else {
-                socket.send(JSON.stringify(invalidCommandMessage));
+                socket.send(JSON.stringify(invalidCommandMessage()));
             }
         });
         socket.on('close', function(){

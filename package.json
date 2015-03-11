@@ -1,5 +1,5 @@
 {
-  "name": "ChatServer",
+  "name": "KTNChatServer",
   "main": "server.js",
   "dependencies": {
     "coveralls": "^2.11.2",
