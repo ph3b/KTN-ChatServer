@@ -204,4 +204,25 @@ describe('General socket endpoints', function(){
             });
 
     });
+    it('Should not be able to log in while already being logged in',function(done){
+        var client1 = new WebSocket(apiUrl);
+
+        var client1cred = {"request": "login", "content": "supermatt"};
+        var client1cred2 = {"request": "login", "content": "ninjamatt"};
+        client1.on('open', function(){
+                client1.send(JSON.stringify(client1cred));
+                client1.send(JSON.stringify(client1cred2));
+
+            client1.onmessage = function(client1response) {
+                    var response = JSON.parse(client1response.data);
+                    if (response.content !== 'Welcome to chat server' && response.content !== 'Logged in successfully') {
+                        expect(response.sender).to.be.eql('server');
+                        expect(response.response).to.be.eql('error');
+                        expect(response.content).to.be.eql('You are already logged in. Please log out then back in.');
+                        done();
+                    }
+                }
+        });
+
+    });
 });

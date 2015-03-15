@@ -45,7 +45,7 @@ describe('Chatting functionality', function(){
 
                 client1.onmessage = function(client1response){
                     client2.onmessage = function(client2response){
-                        response = JSON.parse(client2response.data);
+                        var response = JSON.parse(client2response.data);
                         if(response.content !== 'Welcome to chat server' && response.content !== 'Logged in successfully') {
                             expect(response.sender).to.be.eql("Northug");
                             expect(response.content).to.be.eql("Du suger!");
@@ -72,7 +72,7 @@ describe('Chatting functionality', function(){
                 client3.on('open', function() {
                     client1.send(JSON.stringify(client1cred));
                     client2.send(JSON.stringify(client2cred));
-                    client2.send(JSON.stringify(client3cred));
+                    client3.send(JSON.stringify(client3cred));
 
                     var chatMessage = {"request": "msg", "content": "Du suger!"};
                     client1.send(JSON.stringify(chatMessage));

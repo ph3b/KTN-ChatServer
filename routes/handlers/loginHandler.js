@@ -1,6 +1,8 @@
 /**
  * Created by mattiden on 24.02.15.
  */
+var response = require('./responses/responses');
+
 module.exports = function(message, socket, connections){
     var username = message.content;
     var usernameExists = false;
@@ -11,24 +13,14 @@ module.exports = function(message, socket, connections){
         }
     }
     if(usernameExists){
-        var response = {
-            'timestamp': Date.now(),
-            'sender': "server",
-            'response': "error",
-            'content': "Username already in use"
-        };
-        socket.send(JSON.stringify(response));
+        socket.send(JSON.stringify(response.usernameExists()));
+    }
+    if(socket.username !== undefined){
+        socket.send(JSON.stringify(response.alreadyLoggedIn()));
     }
     else {
         socket.username = username;
         connections.push(socket);
-
-        var response = {
-            'timestamp': Date.now(),
-            'sender': "server",
-            'response': "info",
-            'content': "Logged in successfully"
-        };
-        socket.send(JSON.stringify(response));
+        socket.send(JSON.stringify(response.successfullyLoggedIn()));
     }
 };
